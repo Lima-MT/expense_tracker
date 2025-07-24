@@ -11,24 +11,55 @@ class ExpenseScreen extends StatefulWidget {
 }
 
 class _ExpenseScreenState extends State<ExpenseScreen> {
-  final List<ExpenseModel> _registerExpense = [
-    ExpenseModel(
-      amount: 64.09,
-      category: Category.food,
-      date: DateTime.now(),
-      title: 'title',
-    ),
-  ];
+  final List<ExpenseModel> _registerExpense = [];
 
   void _openAddExpenseOverLay() {
     showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
-      builder: (ctx) => NewExpenseScreen(),
+      builder: (ctx) => NewExpenseScreen(onAddExpense: _addNewExpense),
+    );
+  }
+
+  void _addNewExpense(ExpenseModel expense) {
+    setState(() {
+      _registerExpense.add(expense);
+    });
+  }
+
+  void _removeExpense(ExpenseModel expense) {
+    final expenseIndex = _registerExpense.indexOf(expense);
+    setState(() {
+      _registerExpense.remove(expense);
+    });
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: Duration(seconds: 3),
+        content: Text('expense deleted'),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () {
+            setState(() {
+              _registerExpense.insert(expenseIndex, expense);
+            });
+          },
+        ),
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    Widget mainContent = const Center(child: Text('Sem Despesa'));
+
+    if (_registerExpense.isNotEmpty) {
+      mainContent = ExpenseList(
+        expenses: _registerExpense,
+        onRemoveExpense: _removeExpense,
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         // backgroundColor: Colors.purple,
@@ -47,7 +78,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
             const SizedBox(height: 12),
             Text('Chart'),
             const SizedBox(height: 12),
-            Expanded(child: ExpenseList(expenses: _registerExpense)),
+            Expanded(child: mainContent),
           ],
         ),
       ),
