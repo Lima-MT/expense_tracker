@@ -7,16 +7,29 @@ class ChartBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 4),
-        child: FractionallySizedBox(
-          heightFactor: fill,
+        child: TweenAnimationBuilder<double>(
+          tween: Tween(begin: 0, end: fill),
+          duration: const Duration(milliseconds: 400),
+          curve: Curves.easeOut,
+          builder: (context, animatedFill, child) {
+            return FractionallySizedBox(
+              heightFactor: animatedFill,
+              child: child,
+            );
+          },
           child: DecoratedBox(
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
-              color: Colors.amber,
+              color: isDarkMode
+                  ? Theme.of(context).colorScheme.secondary
+                  : Theme.of(context).colorScheme.primary,
             ),
           ),
         ),
