@@ -23,7 +23,7 @@ void main() {
         ),
         cardTheme: CardThemeData().copyWith(
           color: kColorScheme.secondaryContainer,
-          margin: const EdgeInsets.all(16),
+          margin: const EdgeInsets.all(6),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(

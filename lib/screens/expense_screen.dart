@@ -1,4 +1,5 @@
 import 'package:expense_tracker/screens/new_expense_screen.dart';
+import 'package:expense_tracker/widgets/charts/chart.dart';
 import 'package:expense_tracker/widgets/expense_list/expense_list.dart';
 import 'package:expense_tracker/models/expense_model.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,20 @@ class ExpenseScreen extends StatefulWidget {
 }
 
 class _ExpenseScreenState extends State<ExpenseScreen> {
-  final List<ExpenseModel> _registerExpense = [];
+  final List<ExpenseModel> _registerExpense = [
+    ExpenseModel(
+      amount: 98,
+      category: Category.leisure,
+      date: DateTime.now(),
+      title: 'end',
+    ),
+    ExpenseModel(
+      amount: 98,
+      category: Category.leisure,
+      date: DateTime.now(),
+      title: 'end',
+    ),
+  ];
 
   void _openAddExpenseOverLay() {
     showModalBottomSheet(
@@ -76,7 +90,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
         child: Column(
           children: [
             const SizedBox(height: 12),
-            Text('Chart'),
+            Chart(expense: _registerExpense),
             const SizedBox(height: 12),
             Expanded(child: mainContent),
           ],
