@@ -36,7 +36,10 @@ class Chart extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         gradient: LinearGradient(
-          colors: [Colors.purple, Colors.lightBlueAccent],
+          colors: [
+            const Color.fromARGB(255, 7, 72, 211),
+            Colors.lightBlueAccent,
+          ],
           begin: Alignment.bottomCenter,
           end: Alignment.topCenter,
         ),
