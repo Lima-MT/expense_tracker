@@ -116,9 +116,9 @@ class _NewExpenseScreenState extends State<NewExpenseScreen> {
                 value: _selectedCategory,
                 items: Category.values
                     .map(
-                      (Category) => DropdownMenuItem(
-                        value: Category,
-                        child: Text(Category.name.toUpperCase()),
+                      (category) => DropdownMenuItem(
+                        value: category,
+                        child: Text(category.name.toUpperCase()),
                       ),
                     )
                     .toList(),
